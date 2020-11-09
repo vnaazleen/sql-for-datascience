@@ -1,0 +1,67 @@
+===============================================================================================
+		                Module 3 Coding Questions
+===============================================================================================
+
+1.Using a subquery, find the names of all the tracks for the album "Californication".
+
+SELECT Name, TrackId
+FROM Tracks INNER JOIN Albums
+ON Albums.AlbumId = Tracks.AlbumId
+WHERE Albums.Title = "Californication"
+
+Ans: Porcelain
+
+2.Find the total number of invoices for each customer along with the customer's full name, city and email.
+
+SELECT FirstName,LastName, City, Email, 
+(SELECT COUNT(*) 
+FROM Invoices
+WHERE Invoices.CustomerId = Customers.CustomerId)
+FROM Customers
+
+Ans: frantisekw@jetbrains.com
+
+3.Retrieve the track name, album, artistID, and trackID for all the albums.
+
+SELECT Tracks.Name, Albums.Title, Artists.ArtistId, Tracks.TrackId
+FROM Albums
+INNER JOIN Tracks ON Albums.AlbumId = Tracks.AlbumId
+INNER JOIN Artists ON Albums.ArtistId = Artists.ArtistId
+
+Ans: Breaking The Rules
+
+4.Retrieve a list with the managers last name, and the last name of the employees who report to him or her.
+
+SELECT EmployeeId, LastName
+FROM Employees
+WHERE ReportsTo == '6'
+
+Ans: King, Callahan
+
+5.Find the name and ID of the artists who do not have albums.
+
+SELECT Artists.Name, Artists.ArtistId
+FROM Artists
+LEFT JOIN Albums
+ON Artists.ArtistId = Albums.ArtistId
+WHERE Albums.AlbumId IS NULL;
+
+Ans: Gilberto
+
+6.Use a UNION to create a list of all the employee's and customer's first names and last names ordered by the last name in descending order.
+
+SELECT LastName FROM Customers
+UNION
+SELECT LastName FROM Employees
+ORDER BY LastName DESC
+
+Ans: Taylor
+
+7.See if there are any customers who have a different city listed in their billing city versus their customer city.
+
+SELECT Customers.CustomerId, City, BillingCity
+FROM Customers INNER JOIN Invoices
+ON Customers.CustomerId = Invoices.CustomerId
+WHERE City <> BillingCity
+
+Ans: No customers have a different city listed in their in their billing city versus customer city
