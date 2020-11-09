@@ -1,0 +1,21 @@
+===============================================================================================
+		                Module 1 Coding Questions
+===============================================================================================
+
+1.Retrieve all the records from the Employees table.
+
+SELECT * FROM Employees WHERE LastName="King";
+
+Ans: 590 Columbia Boulevard West, Lethbridge, AB, CANADA T1K 5N8
+
+2.Retrieve the FirstName, LastName, Birthdate, Address, City, and State from the Employees table.
+
+SELECT FirstName, LastName, Birthdate, Address, City, State FROM Employees
+
+Ans: Steve
+
+3.Retrieve all the columns from the Tracks table, but only return 20 rows.
+
+SELECT * FROM Tracks LIMIT 20
+
+Ans: 375418
