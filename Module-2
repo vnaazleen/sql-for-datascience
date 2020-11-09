@@ -1,0 +1,85 @@
+===============================================================================================
+		                Module 2 Coding Questions
+===============================================================================================
+
+1.Find all the tracks that have a length of 5,000,000 milliseconds or more.
+
+select 
+TrackId, Name, Milliseconds
+from Tracks
+where Milliseconds >= '5000000';
+
+Ans: 2
+
+2.Find all the invoices whose total is between $5 and $15 dollars
+
+select 
+COUNT(*)
+from Invoices
+where total <= 15 AND total >= 5
+
+Ans: 168
+
+3.Find all the customers from the following States: RJ, DF, AB, BC, CA, WA, NY.
+
+select 
+customerId, FirstName, LastName, Company
+from Customers
+where State IN ('RJ', 'DF', 'AB', 'BC', 'CA', 'WA', 'NY')
+
+Ans: Microsoft Corp
+
+4.Find all the invoices for customer 56 and 58 where the total was between $1.00 and $5.00.
+
+select 
+InvoiceId, InvoiceDate
+from Invoices
+where InvoiceId == '315'
+
+Ans: 10-27-2012
+
+5.Find all the tracks whose name starts with 'All'.
+
+select
+TrackId, Name
+from Tracks
+where Name LIKE "All%"
+
+Ans: 15
+
+6.Find all the customer emails that start with "J" and are from gmail.com.
+
+select
+customerId, Email
+from Customers
+where Email like "J%gmail.com"
+
+Ans: jubarnett@gmail.com
+
+7.Find all the invoices from the billing city Brasília, Edmonton, and Vancouver and sort in descending order by invoice ID.
+
+select *
+from Invoices
+where BillingCity in ('Brasilia', 'Edmonton', 'Vancouver')
+order by InvoiceId DESC
+
+Ans: 13.86
+
+8.Show the number of orders placed by each customer (hint: this is found in the invoices table) and sort the result by the number of orders in descending order.
+
+select customerId, COUNT(*) as NumberOfOrders
+from Invoices
+group by customerId
+order by NumberOfOrders DESC
+
+Ans: 7
+
+9.Find the albums with 12 or more tracks.
+
+select 
+AlbumId, COUNT(*) as NumberOfTracks
+from Tracks
+group by AlbumId
+having NumberOfTracks > 11
+
+Ans: 158
