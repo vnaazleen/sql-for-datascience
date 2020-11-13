@@ -1,4 +1,3 @@
 # SQL for Data Science
 
-
-SQL for Data Science by University of California, Davis, Coursera.
+Learn SQL Basics for Data Science by University of California, Davis, Coursera.
