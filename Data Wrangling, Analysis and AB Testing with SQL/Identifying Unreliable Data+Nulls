@@ -1,0 +1,64 @@
+---------------------------------------------------------------------------------
+                    Identifying Unreliable Data + Nulls
+---------------------------------------------------------------------------------
+
+Exercise-1:
+-- GOAL: Can you trust this events table
+-- SECRET: There are some entire days missing
+
+SELECT date(event_time) AS date,
+       COUNT(*) AS rows
+FROM dsv1069.events_201701
+GROUP BY date(event_time)
+
+Answer: Unless your are looking for specific time period, this is not gonna be the right 
+table you can trust.
+
+Exercise-2:
+--GOAL: Using any methods you like, determine if you can you trust this events table.
+--(HINT: When did we start recording events on mobile)
+--SECRET: In this case, mobile logging hasn't been implemented until recently
+
+SELECT date(event_time) AS date,
+       event_name,
+       platform,
+       COUNT(*)
+FROM dsv1069.events_ex2
+GROUP BY date(event_time),
+         event_name,
+         platform
+
+Answer: Yes, we can use this table.
+
+Exercise-3:
+--GOAL: Count item views by day
+-- You found this table item_views_temp - can you use it?
+--SECRET: This table doesn't have dates.
+ 
+SELECT SUM(view_events) AS event_count
+FROM dsv1069.item_views_by_category_temp
+
+SELECT COUNT(DISTINCT event_id) AS event_count
+FROM dsv1069.events 
+WHERE event_name = 'view_item'
+
+Answer: No 
+
+Exercise-4: 
+-- Goal: Using any methods you like, decide if this table is ready to be used as a source of truth.
+
+Answer: 
+
+Yes, We should preprocess & remove the Null values in user_id and use it.
+
+Exercise-5: 
+
+-- Goal:  Is this the right way to join orders to users? Is this the right way this join.
+-- SECRET: Use COALESCE on user_id
+
+SELECT COUNT(*)
+FROM dsv1069.orders
+JOIN dsv1069.users
+ON orders.user_id = COALESCE(users.parent_user_id, users.id)
+
+Answer: Using COALESCE on user_id, is rightway to get NULL value rows 
