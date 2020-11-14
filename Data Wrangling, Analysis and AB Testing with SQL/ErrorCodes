@@ -7,7 +7,9 @@ Goal: Here we use users table to pull a list of user email addresses. Edit the q
 addresses, but only for non-deleted users.
 
 Ans:
-SELECT email_address, deleted_at
+SELECT 
+	email_address
+	, deleted_at
 FROM dsv1069.users
 WHERE deleted_at is NULL
 
@@ -15,9 +17,12 @@ Exercise-2:
 Goal: Use the items table to count the number of items for sale in each category
 
 Ans:
-SELECT COUNT(*), category
+SELECT 
+	category
+	, COUNT(id) AS item_count
 FROM dsv1069.items
 GROUP BY category
+ORDER BY item_count DESC
 
 Exercise-3:
 -Goal: Select all of the columns from the result when you JOIN the users table to the orders
@@ -25,22 +30,23 @@ table
 
 Ans:
 SELECT *
-FROM dsv1069.users JOIN dsv1069.orders
-ON dsv1069.users.id = dsv1069.orders.user_id
+FROM dsv1069.users 
+JOIN dsv1069.orders
+ON users.id = orders.user_id
 
 Exercise-4:
 Check out the query below. This is not the right way to count the number of viewed_item
 events. Determine what is wrong and correct the error.
 -----------------------------------------------------
 SELECT
-COUNT(event_id) AS events
+	COUNT(event_id) AS events
 FROM dsv1069.events
 WHERE event_name = ‘view_item’
 -----------------------------------------------------
 
 Ans:
 SELECT
-COUNT(event_id) AS events
+	COUNT(event_id) AS events
 FROM dsv1069.events
 WHERE event_name = 'view_item'
 
@@ -57,9 +63,10 @@ ON orders.item_id = items.id
 
 Ans:
 SELECT
-COUNT(DISTINCT o.item_id) AS item_count
+ COUNT(DISTINCT o.item_id) AS item_count
 FROM dsv1069.orders o
-INNER JOIN dsv1069.items i ON o.item_id = i.id
+INNER JOIN dsv1069.items i 
+ON o.item_id = i.id
 
 Exercise-6:
 --Goal: For each user figure out IF a user has ordered something, and when their first purchase
@@ -86,9 +93,9 @@ SELECT
     WHEN MIN(orders.paid_at) is NULL THEN 'NOT A BUYER' ELSE 'BUYER'
     END as INFO
 FROM 
-  dsv1069.orders
-INNER JOIN 
   dsv1069.users
+LEFT OUTER JOIN 
+  dsv1069.orders
 ON 
   orders.user_id = users.id 
 GROUP BY
@@ -107,11 +114,11 @@ isn’t right. Check to make sure the number of users adds up, and if not, fix t
      MIN(event_time) as first_view
      FROM 
       dsv1069.users
-     LEFT JOIN 
+     LEFT OUTER JOIN 
       dsv1069.events 
      ON 
       events.user_id = users.id 
-     WHERE
+     AND
       event_name = 'view_user_profile'
      GROUP BY
       users.id 
