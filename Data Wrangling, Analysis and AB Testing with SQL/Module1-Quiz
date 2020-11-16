@@ -1,0 +1,100 @@
+------------------------------------------------------------------------------------------------
+                                MODULE - 1 QUIZ
+-------------------------------------------------------------------------------------------------
+
+Q1. what does this query count?
+
+SELECT 
+    COUNT(*)
+FROM
+    dsv1069.users
+JOIN
+    dsv1069.orders
+ON
+    users.id = orders.user_id
+
+Answer: Counts the number of rows in the orders table, becuase all the users have a user_id and every user is in the user's table
+
+Q2. When I run the query below, no rows are returned, but there are no error messages. What are possible reasons for this?
+
+SELECT *
+FROM example_table
+WHERE id IS NULL
+
+Answer: => There are no rows in the example_table (its empty)
+        => There are no rows with a null id
+
+Q3. In the events table, (dsv1069.events) for this class, how many rows exist per event_id?
+
+Answer: One per parameter_name
+
+Q4. When you encounter a new dataset, which of the following can you assume?
+
+Answer: => The table is empty
+        => Test usage is unfiltered
+        => There are duplicate rows
+        => The data is out-of-date
+
+Q5. TROUBLESHOOT THIS ERROR: Based on your exploration of the tables in the course dataset. Why are the results to this specific query empty?
+
+SELECT 
+    COUNT(*)
+FROM
+    dsv1069.users
+JOIN
+    dsv1069.events
+ON
+    users.parent_user_id = events.user_id
+WHERE 
+    event_name = 'view_item'
+AND 
+    merged_at IS NULL
+
+Answer: There are no parent_user_ids that satisfy the WHERE clause
+
+Q6. TROUBLESHOOT THIS ERROR: Why are the results for this specific query empty?
+
+SELECT 
+    COUNT(*)
+FROM
+    dsv1069.events
+WHERE 
+    event_name = 'item_view'
+
+Answer: There are no events with this event_name
+
+Q7. What does this query do? Select all true statements.
+
+SELECT 
+    COUNT(*)
+FROM
+    dsv1069.events
+WHERE 
+    event_name = 'view_item'
+
+Answer: The query counts the number of rows corresponding to view_item events (Count(*) counts rows not unique events, and because of this where clause it counts the number of view_item event rows.)
+
+Q8. Consider the following query:
+SELECT *
+FROM table_alpha
+JOIN table_beta
+ON table_alpha.key = table_alpha.column 
+
+What happens when some rows have a NULL value in the column table_alpha.key?
+
+Answer: Each row with a null value is joined to every row in table_beta where table_beta.column is null 
+
+Q9. Which of the following are problems with the query below?
+
+SELECT 
+    COUNT(*)
+FROM
+    dsv1069.users
+JOIN
+    dsv1069.orders
+ON
+    users.parent_user_id = orders.user_id
+
+Answer: Count(*) counts rows not unique users
+
+Q10. In the users table, the column parent_user_id is => Sometimes NULL
